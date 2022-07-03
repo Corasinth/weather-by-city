@@ -10,27 +10,54 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
+    <div>
         <div class="row">
-          <div class="col-2">
+          <div class="col-3 bg-secondary">
             <h1>Search for a city</h1>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn" type="submit">Search</button>
+            </form>
           </div>
-          <div class="col-10">
+          <div class="col-9">
             <div class="row">
-            <h1>City</h1>
+            <h1>City <span id="today"></span></h1>
+            <p>Temperature: <span id="temperature"></span></p>
+            <p>Humidity: <span id="humidity"></span>%</p>
+            <p>Wind Speed: <span id="windSpeed"></span> MPH</p>
+            <p>UV Index: <span id="uvIndex"></span> °F</p>
             </div>
             <div class="row">
             <h2>5 Day Forecast</h2>
             <div class="col-2">
                 <h3>Day 1</h3>
-            </div> <div class="col-2">
+                <p id="emoji1"></p>
+                <p>Temp: <span id="temp1"></span></p>
+                <p>Humidity: <span id="humid1"></span></p>
+            </div> 
+            <div class="col-2">
                 <h3>Day 2</h3>
-            </div> <div class="col-2">
+                <p id="emoji2"></p>
+                <p>Temp: <span id="temp2"></span></p>
+                <p>Humidity: <span id="humid2"></span></p>
+            </div> 
+            <div class="col-2">
+                <p id="emoji3"></p>
                 <h3>Day 3</h3>
-            </div> <div class="col-2">
+                <p>Temp: <span id="temp3"></span></p>
+                <p>Humidity: <span id="humid3"></span></p>
+            </div> 
+            <div class="col-2">
+                <p id="emoji4"></p>
                 <h3>Day 4</h3>
-            </div> <div class="col-2">
+                <p>Temp: <span id="temp4"></span></p>
+                <p>Humidity: <span id="humid4"></span></p>
+            </div> 
+            <div class="col-2">
+                <p id="emoji5"></p>
                 <h3>Day 5</h3>
+                <p>Temp: <span id="temp5"></span></p>
+                <p>Humidity: <span id="humid5"></span></p>
             </div>
             </div>
           </div>
