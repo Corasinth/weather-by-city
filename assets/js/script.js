@@ -1,13 +1,13 @@
 // =============== Variables ===============
+var submitButton = document.getElementById("submit")
 var apiKey
-var cityQuery
 var latitude 
 var longitude 
 var weatherURL
 var geocodeURL
 
 // =============== Functions for Getting Data ===============
-function fetchLatLon () {
+function fetchLatLon (cityQuery) {
     geocodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityQuery}&limit=5&appid=${apiKey}`
     fetch (geocodeURL)
     .then(function(response) {
@@ -43,7 +43,11 @@ function fetchWeather () {
 }
 
 // =============== Functions for Generating Elements on Page ===============
-
+submitButton.addEventListener("click", function (event) {
+    event.preventDefault()
+    var citySearchValue = document.getElementById("input").value
+    console.log(citySearchValue)
+})
 
 // =============== Functions for Storing and Retrieving Data from Local Storage ===============
 
