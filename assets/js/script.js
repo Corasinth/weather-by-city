@@ -1,13 +1,14 @@
 // =============== Variables ===============
-var apiKey = 
-var cityQuery = "City of London"
+var apiKey
+var cityQuery
 var latitude 
 var longitude 
 var weatherURL
-var geocodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityQuery}&limit=5&appid=${apiKey}`
+var geocodeURL
 
-// =============== Functions ===============
+// =============== Functions for Getting Data ===============
 function fetchLatLon () {
+    geocodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${cityQuery}&limit=5&appid=${apiKey}`
     fetch (geocodeURL)
     .then(function(response) {
     return response.json();
@@ -27,13 +28,22 @@ function fetchWeather () {
     .then (function (weatherInfo) {
     console.log(weatherURL);
     console.log (weatherInfo);
+    console.log(new Date(weatherInfo.current.dt*1000).toDateString());
     console.log(weatherInfo.current.temp);
     console.log(weatherInfo.current.humidity);
     console.log(weatherInfo.current.wind_speed);
     console.log(weatherInfo.current.uvi);
     console.log(weatherInfo.current.weather[0].icon);
+    //index 4-9 for month day format
+    console.log(new Date(weatherInfo.daily[0].dt*1000).toDateString());
     console.log(weatherInfo.daily[0].temp.day);
     console.log(weatherInfo.daily[0].humidity);
     console.log(weatherInfo.daily[0].weather[0].icon);
     })
 }
+
+// =============== Functions for Generating Elements on Page ===============
+
+
+// =============== Functions for Storing and Retrieving Data from Local Storage ===============
+
