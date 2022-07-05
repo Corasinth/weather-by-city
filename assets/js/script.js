@@ -5,7 +5,7 @@ var weatherURL
 var geocodeURL
 
 var keyList = []
-// =============== Functions for Getting Data ===============
+// =============== Functions for Storing and Writing API Information ===============
 function fetchLatLon (city) {
     geocodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`
     fetch (geocodeURL)
@@ -58,10 +58,11 @@ async function fetchWeather (coordinateArray) {
     })
 }
 
-// =============== Functions for Storing and Writing API Information ===============
-
-
-
+function searchHistory () {
+    if (Boolean(JSON.parse(localStorage.getItem("keyList"))) !== false) {
+        keyList = JSON.parse(localStorage.getItem("keyList"))
+    }
+}
 // =============== Event Listener ===============
 submitButton.addEventListener("click", async function (event) {
     event.preventDefault();
