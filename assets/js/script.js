@@ -60,17 +60,21 @@ function fetchWeather (coordinateArray) {
     console.log (weatherInfo);
     console.log(new Date(weatherInfo.current.dt*1000).toDateString());
     cityEl.textContent = `${nameOfCity} (${new Date(weatherInfo.current.dt*1000).toDateString()})`;
-    var link = `https://openweathermap.org/img/wn/${weatherInfo.current.weather[0].icon}.png`
-    document.getElementById("currentWeatherIcon").setAttribute("src", link);
+    document.getElementById("currentWeatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherInfo.current.weather[0].icon}.png`);
     temperature.textContent = weatherInfo.current.temp;
     humidity.textContent = weatherInfo.current.humidity;
     windSpeed.textContent = weatherInfo.current.wind_speed;
     uvIndex.textContent = weatherInfo.current.uvi;
     //index 4-9 for month day format
-    console.log(new Date(weatherInfo.daily[0].dt*1000).toDateString());
-    console.log(weatherInfo.daily[0].temp.day);
-    console.log(weatherInfo.daily[0].humidity);
-    console.log(weatherInfo.daily[0].weather[0].icon);
+    for (var i = 0; i < 5; i++) {
+        var date = new Date(weatherInfo.daily[i].dt*1000).toDateString();
+        console.log (date)
+        console.log (date.toLocaleString())
+        document.getElementById(`forecast${i}`).textContent = `${date[4]}${date[5]}${date[6]} ${date[8]}${date[9]}`
+        document.getElementById(`temp${i}`).textContent = `${weatherInfo.daily[i].temp.day} °F`;
+        document.getElementById(`humid${i}`).textContent = `${weatherInfo.daily[i].humidity}%`;
+        document.getElementById(`icon${i}`).setAttribute ("src", `https://openweathermap.org/img/wn/${weatherInfo.daily[i].weather[0].icon}.png`)
+    }
     })
 }
 
