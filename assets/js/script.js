@@ -3,9 +3,8 @@ var submitButton = document.getElementById("submit")
 var apiKey
 var weatherURL
 var geocodeURL
-
 var keyList = []
-// =============== Functions for Storing and Writing API Information ===============
+// =============== Functions for Getting and Storing API Data ===============
 
 //Fetches latitude and longitude from API, saves them to local storage along with the appropriate key names, and gives fetchWeather the coordinates
 function fetchLatLon (city) {
@@ -15,9 +14,17 @@ function fetchLatLon (city) {
     return response.json();
     })
     .then (function (geocodeInfo) {
-    var location = `${geocodeInfo[0].name}, ${geocodeInfo[0].state}, ${geocodeInfo[0].country}`
+    //Although location is defined just 5 lines lower, for some reason if it isn't defined 
     var latitude = geocodeInfo[0].lat
-    var longitude = geocodeInfo[0].lon    
+    var longitude = geocodeInfo[0].lon 
+    //Although location is defined in the if statements below, if it is not defined here then the key list includes a strange object for no apparent reason. If the var location isn't created here, then the HTML file gets saved to local storage, and the tab crashes until the item is cleared. While this can be solved by simply not including the if statements below and letting the key list read out with "undefined" strings, The current implementation does work without any bugs I've been able to find. 
+    var location = `${geocodeInfo[0].name}, ${geocodeInfo[0].state}, ${geocodeInfo[0].country}`   
+   //This keeps undefineds from being part of the key names
+    if (Boolean(geocodeInfo[0].state) === false) {
+        location = `${geocodeInfo[0].name}, ${geocodeInfo[0].country}`
+    } else {
+        location = `${geocodeInfo[0].name}, ${geocodeInfo[0].state}, ${geocodeInfo[0].country}`
+    }
     //Prevents duplicates from clogging search history
     if (keyList.includes(location) === false) {
         //Keeps search history to 10 items or less
@@ -36,7 +43,7 @@ function fetchLatLon (city) {
 })
 }
 
-//Gets weather information and sends it to be written to html
+//Gets weather information and sends it to be written to HTML
 function fetchWeather (coordinateArray) {
     weatherURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinateArray[0]}&lon=${coordinateArray[1]}&units=imperial&appid=${apiKey}`
     fetch (weatherURL)
@@ -62,10 +69,17 @@ function fetchWeather (coordinateArray) {
 
 //Sets the current list of keys to the value saved in storage and writes it to HTML
 function searchHistory () {
-    if (Boolean(JSON.parse(localStorage.getItem("keyList"))) !== false) {
-        keyList = JSON.parse(localStorage.getItem("keyList"))
+    var localKeyList = JSON.parse(localStorage.getItem("keyList"))
+    if (Boolean(localKeyList) !== false) {
+        keyList = localKeyList
     }
 }
+
+// =============== Functions for Writing API Data to HTML ===============
+
+
+
+
 // =============== Event Listener ===============
 
 //Handles searches and calls appropriate functions with appropriate values
