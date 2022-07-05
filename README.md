@@ -1,4 +1,4 @@
-# Project Title
+# Search-by-City Weather Dashboard
 
 ## Description 
 
@@ -14,33 +14,22 @@
 * [Tests](#tests)
 
 
-## Installation
-
-
-
 ## Usage 
 
+
+
 ## Credits
+
+[Open Weather Map's](https://openweathermap.org/) One Call (1.0) API and geocoding API provide the backbone of the site's weather functionality. 
 
 [Font Awesome](https://fontawesome.com/icons/sun?s=solid) provided the site's icon.
 
 
 ## [License](./LICENSE)
+
 This website uses the open-source MIT License.
 
 ---
 
-## Badges
-
-![badmath](https://img.shields.io/github/languages/top/nielsenjared/badmath)
-
-
 ## Features
 
-
-## Contributing
-
-
-## Tests
-
-.
