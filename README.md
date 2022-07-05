@@ -22,7 +22,7 @@
 
 ## Credits
 
-The CSS reset used came from the blog [Piccalil](https://piccalil.li/blog/a-modern-css-reset/).
+[Font Awesome](https://fontawesome.com/icons/sun?s=solid) provided the site's icon.
 
 
 ## [License](./LICENSE)
