@@ -1,6 +1,6 @@
 // =============== Variables ===============
 var submitButton = document.getElementById("submit")
-var apiKey = "c568cd8c4c4e9b074feb1103b4c9a187"
+var apiKey
 var weatherURL
 var geocodeURL
 
@@ -66,6 +66,7 @@ async function fetchWeather (coordinateArray) {
 submitButton.addEventListener("click", async function (event) {
     event.preventDefault();
     var citySearchValue = document.getElementById("input").value;
+    document.getElementById("input").value = "";
     console.log("this is" + citySearchValue);
     fetchLatLon(citySearchValue);
 })
