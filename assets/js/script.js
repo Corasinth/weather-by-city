@@ -1,11 +1,10 @@
 // =============== Variables ===============
 var submitButton = document.getElementById("submit")
-var apiKey = 
-var latitude 
-var longitude 
+var apiKey = "c568cd8c4c4e9b074feb1103b4c9a187"
 var weatherURL
 var geocodeURL
 
+var keyList = []
 // =============== Functions for Getting Data ===============
 function fetchLatLon (city) {
     geocodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`
@@ -14,17 +13,29 @@ function fetchLatLon (city) {
     return response.json();
     })
     .then (function (geocodeInfo) {
-    latitude = geocodeInfo[0].lat
-    longitude = geocodeInfo[0].lon
-    return [geocodeInfo[0].lat, geocodeInfo[0].lon]
+    var location = `${geocodeInfo[0].name}, ${geocodeInfo[0].state}, ${geocodeInfo[0].country}`
+    var latitude = geocodeInfo[0].lat
+    var longitude = geocodeInfo[0].lon    
+    if (keyList.includes(location) === false) {
+        if (keyList.length === 10) {
+            localStorage.removeItem(keyList[0])
+            keyList.shift()
+            keyList.push (location)
+            localStorage.setItem ("keyList", JSON.stringify(keyList))
+        } else {
+        keyList.push (location)
+        localStorage.setItem ("keyList", JSON.stringify(keyList))
+        }
+    }
+    localStorage.setItem (location, JSON.stringify([latitude, longitude]))
+    fetchWeather([latitude, longitude ])
 })
 .then (function check () {
-    console.log ([latitude, longitude])
-    fetchWeather([latitude, longitude])
+ 
 }
 )}
 
-function fetchWeather (coordinateArray) {
+async function fetchWeather (coordinateArray) {
     weatherURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinateArray[0]}&lon=${coordinateArray[1]}&units=imperial&appid=${apiKey}`
     fetch (weatherURL)
     .then(function(response) {
@@ -47,13 +58,14 @@ function fetchWeather (coordinateArray) {
     })
 }
 
-// =============== Functions for Generating Elements on Page ===============
-submitButton.addEventListener("click", function (event) {
+// =============== Functions for Storing and Writing API Information ===============
+
+
+
+// =============== Event Listener ===============
+submitButton.addEventListener("click", async function (event) {
     event.preventDefault();
     var citySearchValue = document.getElementById("input").value;
     console.log("this is" + citySearchValue);
-     fetchLatLon(citySearchValue);
+    fetchLatLon(citySearchValue);
 })
-
-// =============== Functions for Storing and Retrieving Data from Local Storage ===============
-
