@@ -1,0 +1,9 @@
+#uvIndex {
+   background-color:rgb(0, 255, 0); 
+   width: 2em; height: 1.5em; 
+   text-align:center; 
+   display: inline-block; 
+   border-radius: 2px;
+   position: relative;
+   top: .1em;
+}

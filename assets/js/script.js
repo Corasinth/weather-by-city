@@ -11,6 +11,8 @@ var humidity = document.getElementById("humidity")
 var windSpeed = document.getElementById("windSpeed")
 var uvIndex = document.getElementById("uvIndex")
 
+
+
 // =============== Functions for Getting and Storing API Data ===============
 //Fetches latitude and longitude from API, saves them to local storage along with the appropriate key names, and gives fetchWeather the coordinates
 function fetchLatLon (city) {
@@ -62,6 +64,7 @@ function fetchWeather (coordinateArray) {
     humidity.textContent = weatherInfo.current.humidity;
     windSpeed.textContent = weatherInfo.current.wind_speed;
     uvIndex.textContent = weatherInfo.current.uvi;
+
     //Fills out each forecast card
     for (var i = 0; i < 5; i++) {
         var date = new Date(weatherInfo.daily[i].dt*1000).toDateString();
