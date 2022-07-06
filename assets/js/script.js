@@ -40,10 +40,10 @@ function fetchLatLon (city) {
         //Saves search to a list of keys in order to make later retrieval for search history easier
         keyList.push (nameOfCity)
         localStorage.setItem ("keyList", JSON.stringify(keyList))
-        searchHistory()
-        }
+    }
     }
     localStorage.setItem (nameOfCity, JSON.stringify([lat, long]))
+    searchHistory()
     fetchWeather([lat, long], nameOfCity)
 })
 }
@@ -97,10 +97,11 @@ function searchHistory () {
     var localStorageKeyList = JSON.parse(localStorage.getItem("keyList"))
     if (Boolean(localStorageKeyList) !== false) {
         keyList = localStorageKeyList;
+        ulEl.textContent = ""
         for (var i = 0; i < keyList.length ; i++) {
             var liEl = document.createElement("li");
             liEl.setAttribute("id", `search${i}`)
-            liEl.setAttribute("class", "bg-dark text-light m-1")
+            liEl.setAttribute("class", "bg-dark text-center text-warning m-2 rounded-2")
             liEl.textContent = keyList[i];
             ulEl.appendChild(liEl);
         }
