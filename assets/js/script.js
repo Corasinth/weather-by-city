@@ -10,9 +10,6 @@ var temperature = document.getElementById("temperature");
 var humidity = document.getElementById("humidity")
 var windSpeed = document.getElementById("windSpeed")
 var uvIndex = document.getElementById("uvIndex")
-
-
-
 // =============== Functions for Getting and Storing API Data ===============
 //Fetches latitude and longitude from API, saves them to local storage along with the appropriate key names, and gives fetchWeather the coordinates
 function fetchLatLon (city) {
@@ -64,11 +61,23 @@ function fetchWeather (coordinateArray) {
     humidity.textContent = weatherInfo.current.humidity;
     windSpeed.textContent = weatherInfo.current.wind_speed;
     uvIndex.textContent = weatherInfo.current.uvi;
-
+    //This section programmatically determines the background color of the UV index based on its value
+    var num1;
+    var num2;
+    if (weatherInfo.current.uvi <= 5) {
+        num1 = Math.round(51*weatherInfo.current.uvi);
+        num2 = Math.round((21*weatherInfo.current.uvi)+150);
+        console.log(num1,num2);
+    } else {
+        num1 = 255;
+        num2 =  Math.round(510-(51*weatherInfo.current.uvi));
+        console.log(num1,num2);
+    };
+    uvIndex.setAttribute("style", `background-color: rgb(${num1}, ${num2}, 0);`);
     //Fills out each forecast card
     for (var i = 0; i < 5; i++) {
         var date = new Date(weatherInfo.daily[i].dt*1000).toDateString();
-        document.getElementById(`forecast${i}`).textContent = `${date[4]}${date[5]}${date[6]} ${date[8]}${date[9]}`
+        document.getElementById(`forecast${i}`).textContent = `${date[4]}${date[5]}${date[6]} ${date[8]}${date[9]}`;
         document.getElementById(`temp${i}`).textContent = `${weatherInfo.daily[i].temp.day} °F`;
         document.getElementById(`humid${i}`).textContent = `${weatherInfo.daily[i].humidity}%`;
         document.getElementById(`icon${i}`).setAttribute ("src", `https://openweathermap.org/img/wn/${weatherInfo.daily[i].weather[0].icon}.png`)

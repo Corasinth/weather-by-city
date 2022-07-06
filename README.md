@@ -29,7 +29,8 @@
 
 This website uses the open-source MIT License.
 
----
-
 ## Features
 
+The websites UV index display is color coded programmatically. At 0, the index color is green. As it approaches 5, the color shifts to yellow. From 5 upwards, the color shifts to red. The color changes at a linear pace. 
+
+---
