@@ -23,7 +23,11 @@ The site is set to automatically load a predetermined city. From this home searc
 
 Previously searched citys and the current city are displayed with their state/province (if any) as well as their country code. 
 
-The search history is limited to 10 items to prevent clogging the screen, and is dynamically updated with each unique search. 
+The search history is limited to 10 items to prevent clogging the screen, and is dynamically updated with each unique search.
+
+Below is a demonstration of the site.
+
+![Searching website for various cities](./assets/images/weather-demo.gif)
 
 ## Credits
 
