@@ -6,6 +6,7 @@ var geocodeURL
 var keyList = []
 
 var cityEl = document.getElementById("city")
+var dateEl = document.getElementById("dateEl")
 var temperature = document.getElementById("temperature");
 var humidity = document.getElementById("humidity")
 var windSpeed = document.getElementById("windSpeed")
@@ -57,7 +58,8 @@ function fetchWeather (coordinateArray, cityName) {
     })
     .then (function (weatherInfo) {
     //Takes a variety of information from the returned data and writes it to appropriate places in the HTML
-    cityEl.textContent = `${cityName} (${new Date(weatherInfo.current.dt*1000).toDateString()})`;
+    cityEl.textContent = cityName;
+    dateEl.textContent = new Date(weatherInfo.current.dt*1000).toDateString();
     document.getElementById("currentWeatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherInfo.current.weather[0].icon}.png`);
     temperature.textContent = weatherInfo.current.temp;
     humidity.textContent = weatherInfo.current.humidity;
