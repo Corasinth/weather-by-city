@@ -10,6 +10,7 @@ var temperature = document.getElementById("temperature");
 var humidity = document.getElementById("humidity")
 var windSpeed = document.getElementById("windSpeed")
 var uvIndex = document.getElementById("uvIndex")
+var ulEl = document.querySelector("ul")
 // =============== Functions for Getting and Storing API Data ===============
 //Fetches latitude and longitude from API, saves them to local storage along with the appropriate key names, and gives fetchWeather the coordinates
 function fetchLatLon (city) {
@@ -36,8 +37,10 @@ function fetchLatLon (city) {
             keyList.push (nameOfCity)
             localStorage.setItem ("keyList", JSON.stringify(keyList))
         } else {
+        //Saves search to a list of keys in order to make later retrieval for search history easier
         keyList.push (nameOfCity)
         localStorage.setItem ("keyList", JSON.stringify(keyList))
+        searchHistory()
         }
     }
     localStorage.setItem (nameOfCity, JSON.stringify([latitude, longitude]))
@@ -54,7 +57,6 @@ function fetchWeather (coordinateArray) {
     })
     .then (function (weatherInfo) {
     //Takes a variety of information from the returned data and writes it to appropriate places in the HTML
-    console.log(new Date(weatherInfo.current.dt*1000).toDateString());
     cityEl.textContent = `${nameOfCity} (${new Date(weatherInfo.current.dt*1000).toDateString()})`;
     document.getElementById("currentWeatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherInfo.current.weather[0].icon}.png`);
     temperature.textContent = weatherInfo.current.temp;
@@ -67,11 +69,9 @@ function fetchWeather (coordinateArray) {
     if (weatherInfo.current.uvi <= 5) {
         num1 = Math.round(51*weatherInfo.current.uvi);
         num2 = Math.round((21*weatherInfo.current.uvi)+150);
-        console.log(num1,num2);
     } else {
         num1 = 255;
         num2 =  Math.round(510-(51*weatherInfo.current.uvi));
-        console.log(num1,num2);
     };
     uvIndex.setAttribute("style", `background-color: rgb(${num1}, ${num2}, 0);`);
     //Fills out each forecast card
@@ -87,16 +87,21 @@ function fetchWeather (coordinateArray) {
 
 //Sets the current list of keys to the value saved in storage and writes it to HTML
 function searchHistory () {
-    var localKeyList = JSON.parse(localStorage.getItem("keyList"))
-    if (Boolean(localKeyList) !== false) {
-        keyList = localKeyList
+    var localStorageKeyList = JSON.parse(localStorage.getItem("keyList"))
+    if (Boolean(localStorageKeyList) !== false) {
+        keyList = localStorageKeyList;
+        for (var i = 0; i < keyList.length ; i++) {
+            var liEl = document.createElement("li", `id=search${i} class="bg-primary m-1"`);
+            liEl.textContent = keyList[i];
+            ulEl.appendChild(liEl);
+        }
     }
 }
 
 // =============== Event Listener ===============
 //Handles searches and calls appropriate functions with appropriate values
-submitButton.addEventListener("click", function (event) {
-    event.preventDefault();
+submitButton.addEventListener("click", function (e) {
+    e.preventDefault();
     var citySearchValue = document.getElementById("input").value;
     document.getElementById("input").value = "";
     fetchLatLon(citySearchValue);
