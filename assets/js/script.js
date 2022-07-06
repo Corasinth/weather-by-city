@@ -20,8 +20,8 @@ function fetchLatLon (city) {
     return response.json();
     })
     .then (function (geocodeInfo) {
-    var latitude = geocodeInfo[0].lat
-    var longitude = geocodeInfo[0].lon 
+    var lat = geocodeInfo[0].lat
+    var long = geocodeInfo[0].lon 
    //This keeps undefineds from being part of the key names and prevents duplicates
     if (Boolean(geocodeInfo[0].state) === false || geocodeInfo[0].state === geocodeInfo[0].name) {
         nameOfCity = `${geocodeInfo[0].name}, ${geocodeInfo[0].country}`
@@ -43,13 +43,13 @@ function fetchLatLon (city) {
         searchHistory()
         }
     }
-    localStorage.setItem (nameOfCity, JSON.stringify([latitude, longitude]))
-    fetchWeather([latitude, longitude ])
+    localStorage.setItem (nameOfCity, JSON.stringify([lat, long]))
+    fetchWeather([lat, long], nameOfCity)
 })
 }
 
 //Gets weather information and writes it to HTML
-function fetchWeather (coordinateArray) {
+function fetchWeather (coordinateArray, cityName) {
     weatherURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinateArray[0]}&lon=${coordinateArray[1]}&units=imperial&appid=${apiKey}`
     fetch (weatherURL)
     .then(function(response) {
@@ -57,7 +57,7 @@ function fetchWeather (coordinateArray) {
     })
     .then (function (weatherInfo) {
     //Takes a variety of information from the returned data and writes it to appropriate places in the HTML
-    cityEl.textContent = `${nameOfCity} (${new Date(weatherInfo.current.dt*1000).toDateString()})`;
+    cityEl.textContent = `${cityName} (${new Date(weatherInfo.current.dt*1000).toDateString()})`;
     document.getElementById("currentWeatherIcon").setAttribute("src", `https://openweathermap.org/img/wn/${weatherInfo.current.weather[0].icon}.png`);
     temperature.textContent = weatherInfo.current.temp;
     humidity.textContent = weatherInfo.current.humidity;
@@ -91,7 +91,9 @@ function searchHistory () {
     if (Boolean(localStorageKeyList) !== false) {
         keyList = localStorageKeyList;
         for (var i = 0; i < keyList.length ; i++) {
-            var liEl = document.createElement("li", `id=search${i} class="bg-primary m-1"`);
+            var liEl = document.createElement("li");
+            liEl.setAttribute("id", `search${i}`)
+            liEl.setAttribute("class", "bg-dark text-light m-1")
             liEl.textContent = keyList[i];
             ulEl.appendChild(liEl);
         }
@@ -107,6 +109,16 @@ submitButton.addEventListener("click", function (e) {
     fetchLatLon(citySearchValue);
 })
 
+//Gets correct city name from keyList array used to generate search history and pulls associated longitude and latitude for fetchWeather
+ulEl.addEventListener("click", function (e) {
+    console.time ("test")
+    for (var i = 0; i < keyList.length ; i++) {
+        if (e.target.matches(`#search${i}`)) {
+            fetchWeather(JSON.parse(localStorage.getItem(`${keyList[i]}`)), keyList[i])       
+        }
+    }
+    console.timeEnd("test")
+})
 // =============== Calling Functions ===============
 searchHistory()
 fetchLatLon("San Francisco")
