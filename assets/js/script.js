@@ -66,14 +66,21 @@ function fetchWeather (coordinateArray, cityName) {
     //This section programmatically determines the background color of the UV index based on its value
     var num1;
     var num2;
+    var num3;
     if (weatherInfo.current.uvi <= 5) {
         num1 = Math.round(51*weatherInfo.current.uvi);
         num2 = Math.round((21*weatherInfo.current.uvi)+150);
+        num3 = 0
+    } else if (weatherInfo.current.uvi > 10) {
+        num1 = 255
+        num2 = 0
+        num3 = Math.round((170*weatherInfo.current.uvi)-1700)
     } else {
         num1 = 255;
         num2 =  Math.round(510-(51*weatherInfo.current.uvi));
+        num3 = 0
     };
-    uvIndex.setAttribute("style", `background-color: rgb(${num1}, ${num2}, 0);`);
+    uvIndex.setAttribute("style", `background-color: rgb(${num1}, ${num2}, ${num3});`);
     //Fills out each forecast card
     for (var i = 0; i < 5; i++) {
         var date = new Date(weatherInfo.daily[i].dt*1000).toDateString();
@@ -111,13 +118,11 @@ submitButton.addEventListener("click", function (e) {
 
 //Gets correct city name from keyList array used to generate search history and pulls associated longitude and latitude for fetchWeather
 ulEl.addEventListener("click", function (e) {
-    console.time ("test")
     for (var i = 0; i < keyList.length ; i++) {
         if (e.target.matches(`#search${i}`)) {
             fetchWeather(JSON.parse(localStorage.getItem(`${keyList[i]}`)), keyList[i])       
         }
     }
-    console.timeEnd("test")
 })
 // =============== Calling Functions ===============
 searchHistory()
