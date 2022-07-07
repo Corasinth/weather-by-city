@@ -5,7 +5,7 @@ This simple site allows you to view the current weather in any given city, plus 
 
 It makes use of the Open Weather API (see [Credits](#credits)).
 
-The site can be found deployed [here]().
+The site can be found deployed [here](https://corasinth.github.io/weather-by-city/).
 
 ## Table of Contents
 
