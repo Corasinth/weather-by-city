@@ -16,7 +16,7 @@ var ulEl = document.querySelector("ul")
 // =============== Functions for Getting and Storing API Data ===============
 //Fetches latitude and longitude from API, saves them to local storage along with the appropriate key names, and gives fetchWeather the coordinates
 function fetchLatLon (city) {
-    geocodeURL = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`
+    geocodeURL = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`
     fetch (geocodeURL)
     .then(function(response) {
     return response.json();
