@@ -116,7 +116,15 @@ submitButton.addEventListener("click", function (e) {
     e.preventDefault();
     var citySearchValue = document.getElementById("input").value;
     document.getElementById("input").value = "";
+    if (citySearchValue === "") {
+        alert("Please enter a city")
+    } else {
+        try {
     fetchLatLon(citySearchValue);
+    } catch (error) {
+        alert("Please enter a valid city name")
+    }
+    }
 })
 
 //Gets correct city name from keyList array used to generate search history and pulls associated longitude and latitude for fetchWeather
