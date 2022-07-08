@@ -1,5 +1,4 @@
 // =============== Variables ===============
-var apiKey = "c568cd8c4c4e9b074feb1103b4c9a187"
 var submitButton = document.getElementById("submit") 
 var nameOfCity
 var weatherURL
